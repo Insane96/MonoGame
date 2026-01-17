@@ -30,11 +30,6 @@
       <ProjectReference Include="..\NewEngine\NewEngine.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Resource Include="Assets\Fonts\GoogleSans-Italic.ttf">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Assets\Fonts\GoogleSans.ttf">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
+      <Folder Include="Assets\" />
     </ItemGroup>
 </Project>
