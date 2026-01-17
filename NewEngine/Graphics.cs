@@ -57,6 +57,9 @@ public static class Graphics
 
     public static void SetResolution(int width, int height)
     {
+        //Don't change resolution if fullscreen
+        if (DeviceManager.IsFullScreen)
+            return;
         DeviceManager.PreferredBackBufferWidth = width;
         DeviceManager.PreferredBackBufferHeight = height;
         DeviceManager.ApplyChanges();

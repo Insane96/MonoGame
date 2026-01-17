@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -65,28 +64,20 @@ public class EngineGame : Game
     protected override void Update(GameTime gameTime)
     {
         Input.Update();
+        Time.UpdateDeltaTime(gameTime);
         if (Input.IsKeyPressed(Keys.Escape) || Input.GamePadState.IsButtonDown(Buttons.Back))
             this.Exit();
         if (Input.IsKeyPressed(Keys.F11))
         {
             Graphics.ToggleFullscreen();
         }
+
         if (Input.IsKeyPressed(Keys.F12))
-        {
-            Graphics.SetResolution(800, 600);
-        }
-        if (Input.IsKeyPressed(Keys.F10))
-        {
-            Graphics.SetResolution(1280, 720);
-        }
-        if (Input.IsKeyPressed(Keys.F9))
-        {
-            Graphics.SetResolution(1920, 1080);
-        }
+            Time.TimeScale = Time.TimeScale >= 1f ? 1f : 3f;
 
         base.Update(gameTime);
     }
-
+    
     protected override void Draw(GameTime gameTime)
     {
         this.GraphicsDevice.Clear(Color.CornflowerBlue);
