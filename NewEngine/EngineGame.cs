@@ -9,11 +9,7 @@ namespace NewEngine;
 /// </summary>
 public abstract class EngineGame : Game
 {
-    private SpriteBatch _spriteBatch;
-    private Vector2[] _scalingSpritePositions;
-    private Texture2D _squareTexture;
-    private Vector2 _spriteOrigin;
-    private Matrix _spriteScaleMatrix;
+    protected SpriteBatch _spriteBatch;
 
     protected EngineGame(int winWidth, int winHeight, bool isMouseVisible = true)
     {
@@ -35,31 +31,8 @@ public abstract class EngineGame : Game
     protected override void LoadContent()
     {
         this._spriteBatch = new SpriteBatch(this.GraphicsDevice);
-        _squareTexture = CreateTexture(GraphicsDevice, 50, 50);
-        _spriteOrigin = new Vector2(_squareTexture.Width / 2f, _squareTexture.Height / 2f);
-
-        _scalingSpritePositions = new Vector2[4];
-        _scalingSpritePositions[0] = new Vector2(25, 25);
-        _scalingSpritePositions[1] = new Vector2(25, Graphics.VirtualHeight - 25);
-        _scalingSpritePositions[2] = new Vector2(Graphics.VirtualWidth - 25, 25);
-        _scalingSpritePositions[3] = new Vector2(Graphics.VirtualWidth - 25, Graphics.VirtualHeight - 25);
 
         base.LoadContent();
-    }
-
-    public static Texture2D CreateTexture(GraphicsDevice device, int width, int height)
-    {
-        // Initialize a texture
-        Texture2D texture = new(device, width, height);
-
-        // The array holds the color for each pixel in the texture
-        Color[] data = new Color[width * height];
-        for (int pixel = 0; pixel < data.Length; pixel++)
-            data[pixel] = Color.White;
-
-        // Set the color
-        texture.SetData(data);
-        return texture;
     }
 
     protected override void Update(GameTime gameTime)
@@ -82,15 +55,6 @@ public abstract class EngineGame : Game
     protected override void Draw(GameTime gameTime)
     {
         this.GraphicsDevice.Clear(Color.CornflowerBlue);
-        // Initialize the batch with the scaling matrix
-        _spriteBatch.Begin(transformMatrix: Graphics.ScaleMatrix);
-        // Draw a sprite at each corner
-        for (int i = 0; i < _scalingSpritePositions.Length; i++)
-        {
-            _spriteBatch.Draw(_squareTexture, _scalingSpritePositions[i], null, Color.White,
-                0f, _spriteOrigin, 1f, SpriteEffects.None, 0f);
-        }
-        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
