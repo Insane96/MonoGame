@@ -27,9 +27,14 @@
         <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*"/>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Content\" />
+      <ProjectReference Include="..\NewEngine\NewEngine.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\NewEngine\NewEngine.csproj" />
+      <Resource Include="Assets\Fonts\GoogleSans-Italic.ttf">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Assets\Fonts\GoogleSans.ttf">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 </Project>
