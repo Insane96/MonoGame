@@ -7,7 +7,7 @@ namespace NewEngine;
 /// <summary>
 /// Extend this instead of <see cref="Game"/>
 /// </summary>
-public class EngineGame : Game
+public abstract class EngineGame : Game
 {
     private SpriteBatch _spriteBatch;
     private Vector2[] _scalingSpritePositions;
@@ -15,7 +15,7 @@ public class EngineGame : Game
     private Vector2 _spriteOrigin;
     private Matrix _spriteScaleMatrix;
 
-    public EngineGame(int winWidth, int winHeight, bool isMouseVisible = true)
+    protected EngineGame(int winWidth, int winHeight, bool isMouseVisible = true)
     {
         Graphics.Init(this, winWidth, winHeight);
         this.Content.RootDirectory = "Content";
