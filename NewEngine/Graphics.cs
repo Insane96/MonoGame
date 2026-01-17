@@ -11,6 +11,16 @@ namespace NewEngine;
 public static class Graphics
 {
     /// <summary>
+    /// The virtual (logical) resolution width used for game rendering.
+    /// </summary>
+    public static int VirtualWidth;
+
+    /// <summary>
+    /// The virtual (logical) resolution height used for game rendering.
+    /// </summary>
+    public static int VirtualHeight;
+    
+    /// <summary>
     /// Gets the actual viewport width in pixels.
     /// </summary>
     public static int ViewportWidth => DeviceManager.GraphicsDevice.Viewport.Width;
@@ -20,16 +30,9 @@ public static class Graphics
     /// </summary>
     public static int ViewportHeight => DeviceManager.GraphicsDevice.Viewport.Height;
 
-    /// <summary>
-    /// The virtual (logical) resolution width used for game rendering.
-    /// </summary>
-    public static int VirtualWidth;
-
-    /// <summary>
-    /// The virtual (logical) resolution height used for game rendering.
-    /// </summary>
-    public static int VirtualHeight;
-
+    public static int ActualWidth => DeviceManager.GraphicsDevice.PresentationParameters.BackBufferWidth;
+    public static int ActualHeight => DeviceManager.GraphicsDevice.PresentationParameters.BackBufferHeight;
+    
     /// <summary>
     /// Gets the aspect ratio of the virtual resolution.
     /// </summary>
@@ -49,6 +52,13 @@ public static class Graphics
     /// Gets a transformation matrix for scaling sprites from virtual to viewport resolution.
     /// </summary>
     public static Matrix ScaleMatrix => Matrix.CreateScale(ScaleX, ScaleY, 1f);
+
+
+    public static float Scale =>
+        Math.Min(
+            (float)ActualWidth / VirtualWidth,
+            (float)ActualHeight / VirtualHeight
+        );
 
     /// <summary>
     /// The underlying MonoGame graphics device manager.
@@ -111,20 +121,12 @@ public static class Graphics
     /// </summary>
     public static void UpdateViewport()
     {
-        int actualW = DeviceManager.GraphicsDevice.PresentationParameters.BackBufferWidth;
-        int actualH = DeviceManager.GraphicsDevice.PresentationParameters.BackBufferHeight;
-
-        float scale = Math.Min(
-            (float)actualW / VirtualWidth,
-            (float)actualH / VirtualHeight
-        );
-
-        int scaledW = (int)(VirtualWidth * scale);
-        int scaledH = (int)(VirtualHeight * scale);
+        int scaledW = (int)(VirtualWidth * Scale);
+        int scaledH = (int)(VirtualHeight * Scale);
 
         Viewport view = new(
-            (actualW - scaledW) / 2,
-            (actualH - scaledH) / 2,
+            (ActualWidth - scaledW) / 2,
+            (ActualHeight - scaledH) / 2,
             scaledW,
             scaledH
         );
