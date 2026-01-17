@@ -22,6 +22,7 @@ public class EngineGame : Game
         this.IsMouseVisible = isMouseVisible;
 
         Input.Init(this);
+        Utils.Init();
     }
 
     protected override void Initialize()
