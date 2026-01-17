@@ -4,29 +4,63 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace NewEngine;
 
+/// <summary>
+/// Provides static access to graphics device management and screen configuration.
+/// Supports resolution-independent rendering with letterboxing/pillarboxing.
+/// </summary>
 public static class Graphics
 {
+    /// <summary>
+    /// Gets the actual viewport width in pixels.
+    /// </summary>
     public static int ViewportWidth => DeviceManager.GraphicsDevice.Viewport.Width;
 
+    /// <summary>
+    /// Gets the actual viewport height in pixels.
+    /// </summary>
     public static int ViewportHeight => DeviceManager.GraphicsDevice.Viewport.Height;
 
-    public static int VirtualWidth, VirtualHeight;
-    
+    /// <summary>
+    /// The virtual (logical) resolution width used for game rendering.
+    /// </summary>
+    public static int VirtualWidth;
+
+    /// <summary>
+    /// The virtual (logical) resolution height used for game rendering.
+    /// </summary>
+    public static int VirtualHeight;
+
+    /// <summary>
+    /// Gets the aspect ratio of the virtual resolution.
+    /// </summary>
     public static float VirtualAspectRatio => (float)VirtualWidth / VirtualHeight;
 
+    /// <summary>
+    /// Gets the horizontal scale factor from virtual to viewport resolution.
+    /// </summary>
     public static float ScaleX => (float) ViewportWidth / VirtualWidth;
+
+    /// <summary>
+    /// Gets the vertical scale factor from virtual to viewport resolution.
+    /// </summary>
     public static float ScaleY => (float) ViewportHeight / VirtualHeight;
+
+    /// <summary>
+    /// Gets a transformation matrix for scaling sprites from virtual to viewport resolution.
+    /// </summary>
     public static Matrix ScaleMatrix => Matrix.CreateScale(ScaleX, ScaleY, 1f);
-    public static float Scale => Math.Min(ScaleX, ScaleY);
 
-    public static int ScaledWidth => (int)(VirtualWidth * Scale);
-    public static int ScaledHeight => (int)(VirtualHeight * Scale);
-    
-    public static int OffsetX => (ViewportWidth - ScaledWidth) / 2;
-    public static int OffsetY => (ViewportHeight - ScaledHeight) / 2;
-
+    /// <summary>
+    /// The underlying MonoGame graphics device manager.
+    /// </summary>
     public static GraphicsDeviceManager DeviceManager = null!;
 
+    /// <summary>
+    /// Initializes the graphics system with the specified virtual resolution.
+    /// </summary>
+    /// <param name="game">The game instance to attach the graphics device manager to.</param>
+    /// <param name="width">The virtual width for game rendering.</param>
+    /// <param name="height">The virtual height for game rendering.</param>
     public static void Init(Game game, int width, int height)
     {
         VirtualWidth = width;
@@ -55,9 +89,14 @@ public static class Graphics
         };
     }
 
+    /// <summary>
+    /// Sets the window resolution. Has no effect when in fullscreen mode.
+    /// </summary>
+    /// <param name="width">The desired window width in pixels.</param>
+    /// <param name="height">The desired window height in pixels.</param>
     public static void SetResolution(int width, int height)
     {
-        //Don't change resolution if fullscreen
+        // Don't change resolution if fullscreen
         if (DeviceManager.IsFullScreen)
             return;
         DeviceManager.PreferredBackBufferWidth = width;
@@ -66,6 +105,10 @@ public static class Graphics
         UpdateViewport();
     }
 
+    /// <summary>
+    /// Updates the viewport to maintain aspect ratio with letterboxing/pillarboxing.
+    /// Call this after any resolution or fullscreen change.
+    /// </summary>
     public static void UpdateViewport()
     {
         int actualW = DeviceManager.GraphicsDevice.PresentationParameters.BackBufferWidth;
@@ -91,7 +134,8 @@ public static class Graphics
     }
 
     /// <summary>
-    /// Toggles fullscreen
+    /// Toggles between fullscreen and windowed mode.
+    /// In fullscreen, uses the display's native resolution. In windowed mode, restores the virtual resolution.
     /// </summary>
     public static void ToggleFullscreen()
     {
