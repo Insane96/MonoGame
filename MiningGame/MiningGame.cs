@@ -39,7 +39,5 @@ public class MiningGame() : EngineGame(1280, 720, false)
             SpriteBatch.Draw(Utils.OneByOneTexture, position, null, Color.White,
                 0f, Origins.Center, 100f, SpriteEffects.None, 0f);
         }
-        SpriteFontBase font30 = _fontSystem.GetFont(30);
-        SpriteBatch.DrawString(font30, "The quick brown\nfox jumps over\nthe lazy dog", new Vector2(80, 80), Color.Yellow);
     }
 }
