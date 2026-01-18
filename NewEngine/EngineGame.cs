@@ -96,12 +96,17 @@ public abstract class EngineGame : Game
         SpriteBatch.Begin(transformMatrix: Graphics.ScaleMatrix);
         GameObjectManager.DrawGameObjects(this.SpriteBatch);
         DrawScaled(gameTime);
-
-        //SpriteFontBase font30 = _fontSystem.GetFont(30);
-        //Vector2 mousePosition = Input.MouseState.Position.ToVector2();
-        //Vector2 virtualMousePosition = Graphics.ScreenToVirtual(mousePosition);
-        //SpriteBatch.DrawString(font30, $"X: {mousePosition.X}, Y: {mousePosition.Y}", new Vector2(80, 80), Color.White);
-        //SpriteBatch.DrawString(font30, $"X: {virtualMousePosition.X}, Y: {virtualMousePosition.Y}", new Vector2(80, 100), Color.White);
+        int scaledFontSize = (int)(30 * Graphics.Scale);
+        SpriteFontBase font = _fontSystem.GetFont(scaledFontSize);
+        float inverseScale = 1f / Graphics.Scale;
+        Vector2 mousePosition = Input.MouseState.Position.ToVector2();
+        Vector2 virtualMousePosition = Graphics.ScreenToVirtual(mousePosition);
+        SpriteBatch.DrawString(font, $"X: {mousePosition.X}, Y: {mousePosition.Y}", new Vector2(80, 80), Color.White, rotation: 0f, origin: Vector2.Zero, scale: new Vector2(inverseScale), layerDepth: 0f);
+        SpriteBatch.DrawString(font, $"X: {virtualMousePosition.X}, Y: {virtualMousePosition.Y}", new Vector2(80, 100), Color.White, rotation: 0f, origin: Vector2.Zero, scale: new Vector2(inverseScale), layerDepth: 0f);
+        
+        font = _fontSystem.GetFont(30);
+        SpriteBatch.DrawString(font, $"X: {mousePosition.X}, Y: {mousePosition.Y}", new Vector2(80, 200), Color.White);
+        SpriteBatch.DrawString(font, $"X: {virtualMousePosition.X}, Y: {virtualMousePosition.Y}", new Vector2(80, 220), Color.White);
         SpriteBatch.End();
         base.Draw(gameTime);
     }
