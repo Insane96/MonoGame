@@ -125,6 +125,30 @@ public static class Graphics
     }
 
     /// <summary>
+    /// Converts screen coordinates to normalized virtual coordinates (0~1).
+    /// </summary>
+    public static Vector2 ScreenToVirtualNormalized(Vector2 screenPosition)
+    {
+        var viewport = DeviceManager.GraphicsDevice.Viewport;
+        return new Vector2(
+            (screenPosition.X - viewport.X) / viewport.Width,
+            (screenPosition.Y - viewport.Y) / viewport.Height
+        );
+    }
+
+    /// <summary>
+    /// Converts screen coordinates to virtual coordinates (0~VirtualWidth, 0~VirtualHeight).
+    /// </summary>
+    public static Vector2 ScreenToVirtual(Vector2 screenPosition)
+    {
+        var viewport = DeviceManager.GraphicsDevice.Viewport;
+        return new Vector2(
+            (screenPosition.X - viewport.X) / Scale,
+            (screenPosition.Y - viewport.Y) / Scale
+        );
+    }
+
+    /// <summary>
     /// Toggles between fullscreen and windowed mode.
     /// In fullscreen, uses the display's native resolution. In windowed mode, restores the virtual resolution.
     /// </summary>
@@ -144,4 +168,6 @@ public static class Graphics
         DeviceManager.ApplyChanges();
         UpdateViewport();
     }
+    
+    
 }
