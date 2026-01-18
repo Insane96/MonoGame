@@ -121,7 +121,6 @@ public static class Graphics
         );
 
         DeviceManager.GraphicsDevice.Viewport = view;
-        
     }
 
     /// <summary>

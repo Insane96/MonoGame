@@ -76,6 +76,7 @@ public static class Input
 
     public static bool IsMouseInBounds()
     {
-        return MouseState.X >= 0 && MouseState.X <= Graphics.VirtualWidth && MouseState.Y >= 0 && MouseState.Y <= Graphics.VirtualHeight;
+        var pos = Graphics.ScreenToVirtual(new Vector2(MouseState.X, MouseState.Y));
+        return pos.X >= 0 && pos.X <= Graphics.VirtualWidth && pos.Y >= 0 && pos.Y <= Graphics.VirtualHeight;
     }
 }

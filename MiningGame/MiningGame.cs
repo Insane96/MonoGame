@@ -6,7 +6,7 @@ using NewEngine;
 
 namespace MiningGame;
 
-public class MiningGame() : EngineGame(1280, 720, false)
+public class MiningGame() : EngineGame(1280, 720, true)
 {
     private Vector2[] _scalingSpritePositions;
     private FontSystem _fontSystem;

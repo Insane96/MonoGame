@@ -49,6 +49,8 @@ public abstract class EngineGame : Game
             this.Exit();
         if (Input.IsKeyPressed(Keys.F11))
             Graphics.ToggleFullscreen();
+        //if (Input.IsKeyPressed(Keys.F10))
+        //    Graphics.SetResolution(1200, 900);
 
         if (Input.IsKeyPressed(Keys.F12))
             Time.TimeScale = Time.TimeScale >= 1f ? 1f : 3f;
