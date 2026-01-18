@@ -246,4 +246,32 @@ public abstract class GameObject(AnimatedSprite? sprite = null)
     /// </summary>
     /// <param name="value">The offset to add to the current position.</param>
     public void Move(Vector2 value) => this.Position += value;
+
+    /// <summary>
+    /// Checks if this GameObject's bounds intersect with another GameObject's bounds.
+    /// </summary>
+    /// <param name="other">The other GameObject to check against.</param>
+    /// <returns>True if the bounds intersect, false otherwise.</returns>
+    public bool Intersects(GameObject other) => Intersects(other.Bounds);
+
+    /// <summary>
+    /// Checks if this GameObject's bounds intersect with a rectangle.
+    /// </summary>
+    /// <param name="rectangle">The rectangle to check against.</param>
+    /// <returns>True if the bounds intersect, false otherwise.</returns>
+    public bool Intersects(Rectangle rectangle) => Bounds.Intersects(rectangle);
+    
+    /// <summary>
+    /// Checks if this GameObject's bounds fully contain another GameObject's bounds.
+    /// </summary>
+    /// <param name="other">The other GameObject to check against.</param>
+    /// <returns>True if this GameObject fully contains the other, false otherwise.</returns>
+    public bool Contains(GameObject other) => Contains(other.Bounds);
+
+    /// <summary>
+    /// Checks if this GameObject's bounds fully contain a rectangle.
+    /// </summary>
+    /// <param name="rectangle">The rectangle to check against.</param>
+    /// <returns>True if this GameObject fully contains the rectangle, false otherwise.</returns>
+    public bool Contains(Rectangle rectangle) => this.Bounds.Contains(rectangle);
 }
