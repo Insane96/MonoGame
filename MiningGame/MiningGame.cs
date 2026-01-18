@@ -6,14 +6,10 @@ using NewEngine;
 
 namespace MiningGame;
 
-public class MiningGame : EngineGame
+public class MiningGame() : EngineGame(1280, 720, false)
 {
     private Vector2[] _scalingSpritePositions;
-    FontSystem _fontSystem;
-    
-    public MiningGame() : base(1280, 720, false)
-    {
-    }
+    private FontSystem _fontSystem;
 
     protected override void LoadContent()
     {
@@ -33,23 +29,17 @@ public class MiningGame : EngineGame
     protected override void Draw(GameTime gameTime)
     {
         base.Draw(gameTime);
-        // Initialize the batch with the scaling matrix
-        _spriteBatch.Begin(transformMatrix: Graphics.ScaleMatrix);
-        // Draw a sprite at each corner
+
+    }
+
+    protected override void DrawScaled(GameTime gameTime)
+    {
         foreach (Vector2 position in _scalingSpritePositions)
         {
-            _spriteBatch.Draw(Utils.OneByOneTexture, position, null, Color.White,
+            SpriteBatch.Draw(Utils.OneByOneTexture, position, null, Color.White,
                 0f, Origins.Center, 100f, SpriteEffects.None, 0f);
         }
-
-        _spriteBatch.End();
-        _spriteBatch.Begin();
-        Vector2 scaledPosition = new(
-            80 * Graphics.ScaleX,
-            80 * Graphics.ScaleY
-        );
         SpriteFontBase font30 = _fontSystem.GetFont(30);
-        _spriteBatch.DrawString(font30, "The quick brown\nfox jumps over\nthe lazy dog", scaledPosition, Color.Yellow);
-        _spriteBatch.End();
+        SpriteBatch.DrawString(font30, "The quick brown\nfox jumps over\nthe lazy dog", new Vector2(80, 80), Color.Yellow);
     }
 }

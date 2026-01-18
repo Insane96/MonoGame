@@ -9,7 +9,7 @@ namespace NewEngine;
 /// </summary>
 public abstract class EngineGame : Game
 {
-    protected SpriteBatch _spriteBatch;
+    protected SpriteBatch SpriteBatch;
 
     protected EngineGame(int winWidth, int winHeight, bool isMouseVisible = true)
     {
@@ -30,7 +30,7 @@ public abstract class EngineGame : Game
 
     protected override void LoadContent()
     {
-        this._spriteBatch = new SpriteBatch(this.GraphicsDevice);
+        this.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
 
         base.LoadContent();
     }
@@ -42,9 +42,7 @@ public abstract class EngineGame : Game
         if (Input.IsKeyPressed(Keys.Escape) || Input.GamePadState.IsButtonDown(Buttons.Back))
             this.Exit();
         if (Input.IsKeyPressed(Keys.F11))
-        {
             Graphics.ToggleFullscreen();
-        }
 
         if (Input.IsKeyPressed(Keys.F12))
             Time.TimeScale = Time.TimeScale >= 1f ? 1f : 3f;
@@ -54,8 +52,14 @@ public abstract class EngineGame : Game
     
     protected override void Draw(GameTime gameTime)
     {
-        this.GraphicsDevice.Clear(Color.CornflowerBlue);
-
+        SpriteBatch.Begin(transformMatrix: Graphics.ScaleMatrix);
+        DrawScaled(gameTime);
+        SpriteBatch.End();
         base.Draw(gameTime);
     }
+
+    /// <summary>
+    /// Renders game elements that should be scaled according to the virtual resolution.
+    /// </summary>
+    protected abstract void DrawScaled(GameTime gameTime);
 }
