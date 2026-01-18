@@ -1,15 +1,12 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Aseprite;
 
 namespace NewEngine.GameObjects;
 
-public abstract class GameObject(AnimatedSprite sprite = null)
+public abstract class GameObject(AnimatedSprite? sprite = null)
 {
-    public Guid Guid { get; } = Guid.NewGuid();
-
     public Vector2 Position { get; set; }
 
     public float X
