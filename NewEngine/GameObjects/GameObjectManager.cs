@@ -9,7 +9,7 @@ public static class GameObjectManager
 {
     internal static Game Game = null!;
     
-    private static List<GameObject> GameObjects { get; } = new();
+    public static List<GameObject> GameObjects { get; } = new();
     private static List<GameObject> GameObjectsToInstantiate { get; } = new();
 
     public static void Init(Game game)
