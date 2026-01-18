@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NewEngine.GameObjects;
 
 namespace NewEngine;
 
@@ -19,6 +20,7 @@ public abstract class EngineGame : Game
 
         Input.Init(this);
         Utils.Init();
+        GameObjectManager.Init(this);
     }
 
     protected override void Initialize()
@@ -47,12 +49,14 @@ public abstract class EngineGame : Game
         if (Input.IsKeyPressed(Keys.F12))
             Time.TimeScale = Time.TimeScale >= 1f ? 1f : 3f;
 
+        GameObjectManager.UpdateGameObjects();
         base.Update(gameTime);
     }
     
     protected override void Draw(GameTime gameTime)
     {
         SpriteBatch.Begin(transformMatrix: Graphics.ScaleMatrix);
+        GameObjectManager.DrawGameObjects(this.SpriteBatch);
         DrawScaled(gameTime);
         SpriteBatch.End();
         base.Draw(gameTime);
