@@ -39,21 +39,10 @@ public static class Graphics
     public static float VirtualAspectRatio => (float)VirtualWidth / VirtualHeight;
 
     /// <summary>
-    /// Gets the horizontal scale factor from virtual to viewport resolution.
-    /// </summary>
-    public static float ScaleX => (float) ViewportWidth / VirtualWidth;
-
-    /// <summary>
-    /// Gets the vertical scale factor from virtual to viewport resolution.
-    /// </summary>
-    public static float ScaleY => (float) ViewportHeight / VirtualHeight;
-
-    /// <summary>
     /// Gets a transformation matrix for scaling sprites from virtual to viewport resolution.
     /// </summary>
-    public static Matrix ScaleMatrix => Matrix.CreateScale(ScaleX, ScaleY, 1f);
-
-
+    public static Matrix ScaleMatrix => Matrix.CreateScale(Scale, Scale, 1f);
+    
     public static float Scale =>
         Math.Min(
             (float)ActualWidth / VirtualWidth,
