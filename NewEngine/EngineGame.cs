@@ -103,10 +103,6 @@ public abstract class EngineGame : Game
         Vector2 virtualMousePosition = Graphics.ScreenToVirtual(mousePosition);
         SpriteBatch.DrawString(font, $"X: {mousePosition.X}, Y: {mousePosition.Y}", new Vector2(80, 80), Color.White, rotation: 0f, origin: Vector2.Zero, scale: new Vector2(inverseScale), layerDepth: 0f);
         SpriteBatch.DrawString(font, $"X: {virtualMousePosition.X}, Y: {virtualMousePosition.Y}", new Vector2(80, 100), Color.White, rotation: 0f, origin: Vector2.Zero, scale: new Vector2(inverseScale), layerDepth: 0f);
-        
-        font = _fontSystem.GetFont(30);
-        SpriteBatch.DrawString(font, $"X: {mousePosition.X}, Y: {mousePosition.Y}", new Vector2(80, 200), Color.White);
-        SpriteBatch.DrawString(font, $"X: {virtualMousePosition.X}, Y: {virtualMousePosition.Y}", new Vector2(80, 220), Color.White);
         SpriteBatch.End();
         base.Draw(gameTime);
     }

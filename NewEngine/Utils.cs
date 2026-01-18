@@ -93,4 +93,29 @@ public static class Utils
     {
         return new Vector2(dir.Y * -1f, dir.X * -1f);
     }
+
+    /// <summary>
+    /// Converts a Color to a packed 32-bit integer in ARGB format.
+    /// </summary>
+    /// <param name="color">The color to convert.</param>
+    /// <returns>A 32-bit integer representing the color in ARGB format.</returns>
+    public static int ColorToInt(Color color)
+    {
+        return (color.A << 24) | (color.R << 16) | (color.G << 8) | color.B;
+    }
+
+    /// <summary>
+    /// Converts a packed 32-bit integer in ARGB format to a Color.
+    /// </summary>
+    /// <param name="argb">The 32-bit integer in ARGB format.</param>
+    /// <returns>The corresponding Color.</returns>
+    public static Color IntToColor(int argb)
+    {
+        return new Color(
+            (argb >> 16) & 0xFF,
+            (argb >> 8) & 0xFF,
+            argb & 0xFF,
+            (argb >> 24) & 0xFF
+        );
+    }
 }
