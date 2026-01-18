@@ -17,6 +17,6 @@ public static class Origins
 
     public static Vector2 GetScreenPosition(Vector2 origin)
     {
-        return origin.Multiply(Graphics.VirtualHeight, Graphics.VirtualHeight);
+        return origin.Multiply(Graphics.ViewportWidth, Graphics.VirtualHeight);
     }
 }
