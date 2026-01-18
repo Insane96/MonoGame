@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace NewEngine;
@@ -43,7 +42,7 @@ public static class Input
     /// </summary>
     public static bool IsKeyPressed(Keys key)
     {
-        return KeyboardState.IsKeyDown(key) && !_oldKeyboardState.IsKeyDown(key) && _game.IsActive;
+        return JustPressed(KeyboardState.IsKeyDown(key), _oldKeyboardState.IsKeyDown(key));
     }
 
     /// <summary>
@@ -51,7 +50,7 @@ public static class Input
     /// </summary>
     public static bool IsLeftClickPressed()
     {
-        return MouseState.LeftButton == ButtonState.Pressed && _oldMouseState.LeftButton != ButtonState.Pressed && IsMouseInBounds() && _game.IsActive;
+        return JustPressed(MouseState.LeftButton == ButtonState.Pressed, _oldMouseState.LeftButton == ButtonState.Pressed);
     }
 
     /// <summary>
@@ -59,7 +58,20 @@ public static class Input
     /// </summary>
     public static bool IsRightClickPressed()
     {
-        return MouseState.RightButton == ButtonState.Pressed && _oldMouseState.RightButton != ButtonState.Pressed && IsMouseInBounds() && _game.IsActive;
+        return JustPressed(MouseState.RightButton == ButtonState.Pressed, _oldMouseState.RightButton == ButtonState.Pressed);
+    }
+
+    /// <summary>
+    /// Returns true if middle click has been pressed and wasn't previously pressed
+    /// </summary>
+    public static bool IsMiddleClickPressed()
+    {
+        return JustPressed(MouseState.MiddleButton == ButtonState.Pressed, _oldMouseState.MiddleButton == ButtonState.Pressed);
+    }
+
+    public static bool JustPressed(bool isPressed, bool wasPressed)
+    {
+        return isPressed && !wasPressed && _game.IsActive;
     }
 
     public static bool IsMouseInBounds()
