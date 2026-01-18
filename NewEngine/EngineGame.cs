@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,13 +8,29 @@ using NewEngine.GameObjects;
 namespace NewEngine;
 
 /// <summary>
-/// Extend this instead of <see cref="Game"/>
+/// Abstract base class for games using the NewEngine framework.
+/// Extend this class instead of <see cref="Game"/> to get automatic setup of
+/// Graphics, Input, Time, Utils, and GameObjectManager systems.
 /// </summary>
 public abstract class EngineGame : Game
 {
+    /// <summary>
+    /// The SpriteBatch used for rendering.
+    /// </summary>
     protected SpriteBatch SpriteBatch;
+
+    /// <summary>
+    /// Font system for text rendering.
+    /// </summary>
     private FontSystem _fontSystem;
 
+    /// <summary>
+    /// Creates a new EngineGame with the specified window dimensions.
+    /// Initializes all engine systems (Graphics, Input, Utils, GameObjectManager).
+    /// </summary>
+    /// <param name="winWidth">The virtual width of the game window.</param>
+    /// <param name="winHeight">The virtual height of the game window.</param>
+    /// <param name="isMouseVisible">Whether the mouse cursor is visible. Defaults to true.</param>
     protected EngineGame(int winWidth, int winHeight, bool isMouseVisible = true)
     {
         Graphics.Init(this, winWidth, winHeight);
@@ -26,6 +42,9 @@ public abstract class EngineGame : Game
         GameObjectManager.Init(this);
     }
 
+    /// <summary>
+    /// Initializes the game and loads fonts.
+    /// </summary>
     protected override void Initialize()
     {
         base.Initialize();
@@ -34,6 +53,9 @@ public abstract class EngineGame : Game
         _fontSystem.AddFont(File.ReadAllBytes(@"Assets/Fonts/GoogleSansCode-Italic.ttf"));
     }
 
+    /// <summary>
+    /// Loads game content and creates the SpriteBatch.
+    /// </summary>
     protected override void LoadContent()
     {
         this.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
@@ -41,6 +63,11 @@ public abstract class EngineGame : Game
         base.LoadContent();
     }
 
+    /// <summary>
+    /// Updates the game state each frame. Handles input, time, and GameObject updates.
+    /// Press Escape or Back to exit, F11 for fullscreen, F12 to toggle time scale.
+    /// </summary>
+    /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Update(GameTime gameTime)
     {
         Input.Update();
@@ -58,14 +85,18 @@ public abstract class EngineGame : Game
         GameObjectManager.UpdateGameObjects();
         base.Update(gameTime);
     }
-    
+
+    /// <summary>
+    /// Renders the game each frame. Clears the screen, draws all GameObjects, then calls DrawScaled.
+    /// </summary>
+    /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
         SpriteBatch.Begin(transformMatrix: Graphics.ScaleMatrix);
         GameObjectManager.DrawGameObjects(this.SpriteBatch);
         DrawScaled(gameTime);
-        
+
         //SpriteFontBase font30 = _fontSystem.GetFont(30);
         //Vector2 mousePosition = Input.MouseState.Position.ToVector2();
         //Vector2 virtualMousePosition = Graphics.ScreenToVirtual(mousePosition);
@@ -76,7 +107,9 @@ public abstract class EngineGame : Game
     }
 
     /// <summary>
-    /// Renders game elements that should be scaled according to the virtual resolution.
+    /// Override this method to render game elements that should be scaled according to the virtual resolution.
+    /// Called after GameObjects are drawn, within the scaled SpriteBatch context.
     /// </summary>
+    /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected abstract void DrawScaled(GameTime gameTime);
 }

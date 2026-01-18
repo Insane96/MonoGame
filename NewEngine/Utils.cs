@@ -1,28 +1,34 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NewEngine.ExtensionMethods;
 
 namespace NewEngine;
 
+/// <summary>
+/// Provides utility methods for geometry calculations and rendering helpers.
+/// </summary>
 public static class Utils
 {
     /// <summary>
-    /// Used to draw solid color rectangles
+    /// A 1x1 white texture used for drawing solid color rectangles and primitives.
     /// </summary>
     public static readonly Texture2D OneByOneTexture = new(Graphics.DeviceManager.GraphicsDevice, 1, 1);
 
+    /// <summary>
+    /// Initializes the Utils class. Called internally by the engine.
+    /// </summary>
     internal static void Init()
     {
         OneByOneTexture.SetData([Color.White]);
     }
 
     /// <summary>
-    /// Determines whether a line, defined by its start and end points, intersects with a rectangle.
+    /// Determines whether a line segment intersects with a rectangle.
     /// </summary>
     /// <param name="lineStart">The starting point of the line.</param>
     /// <param name="lineEnd">The ending point of the line.</param>
-    /// <param name="rectangle">The rectangle to test for intersection with the line.</param>
-    /// <returns>True if the line intersects with the rectangle; otherwise, false.</returns>
+    /// <param name="rectangle">The rectangle to test for intersection.</param>
+    /// <returns>True if the line intersects with any edge of the rectangle; otherwise, false.</returns>
     public static bool Intersects(Vector2 lineStart, Vector2 lineEnd, Rectangle rectangle)
     {
         return Intersects(lineStart, lineEnd, rectangle.PosToVector2(), rectangle.PosToVector2().Sum(rectangle.Width, 0f))
@@ -32,7 +38,7 @@ public static class Utils
     }
 
     /// <summary>
-    /// Determines whether two line segments, defined by their start and end points, intersect.
+    /// Determines whether two line segments intersect.
     /// </summary>
     /// <param name="lineStartA">The starting point of the first line segment.</param>
     /// <param name="lineEndA">The ending point of the first line segment.</param>
@@ -58,16 +64,31 @@ public static class Utils
         return u is >= 0 and <= 1;
     }
 
+    /// <summary>
+    /// Rotates a direction vector 90 degrees clockwise.
+    /// </summary>
+    /// <param name="dir">The direction vector to rotate.</param>
+    /// <returns>The rotated direction vector.</returns>
     public static Vector2 RotateDirectionClockwise(Vector2 dir)
     {
         return new Vector2(dir.Y * -1f, dir.X);
     }
 
+    /// <summary>
+    /// Rotates a direction vector 90 degrees counter-clockwise.
+    /// </summary>
+    /// <param name="dir">The direction vector to rotate.</param>
+    /// <returns>The rotated direction vector.</returns>
     public static Vector2 RotateDirectionCounterClockwise(Vector2 dir)
     {
         return new Vector2(dir.Y, dir.X * -1f);
     }
 
+    /// <summary>
+    /// Returns the opposite (180 degree rotated) direction vector.
+    /// </summary>
+    /// <param name="dir">The direction vector to invert.</param>
+    /// <returns>The opposite direction vector.</returns>
     public static Vector2 OppositeDirection(Vector2 dir)
     {
         return new Vector2(dir.Y * -1f, dir.X * -1f);
