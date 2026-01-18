@@ -30,7 +30,14 @@ public static class Graphics
     /// </summary>
     public static int ViewportHeight => DeviceManager.GraphicsDevice.Viewport.Height;
 
+    /// <summary>
+    /// Gets the back buffer width in pixels (full window/screen size before letterboxing).
+    /// </summary>
     public static int ActualWidth => DeviceManager.GraphicsDevice.PresentationParameters.BackBufferWidth;
+
+    /// <summary>
+    /// Gets the back buffer height in pixels (full window/screen size before letterboxing).
+    /// </summary>
     public static int ActualHeight => DeviceManager.GraphicsDevice.PresentationParameters.BackBufferHeight;
     
     /// <summary>
@@ -43,6 +50,9 @@ public static class Graphics
     /// </summary>
     public static Matrix ScaleMatrix => Matrix.CreateScale(Scale, Scale, 1f);
     
+    /// <summary>
+    /// Gets the uniform scale factor used to fit the virtual resolution into the actual resolution while maintaining aspect ratio.
+    /// </summary>
     public static float Scale =>
         Math.Min(
             (float)ActualWidth / VirtualWidth,
@@ -125,7 +135,10 @@ public static class Graphics
 
     /// <summary>
     /// Converts screen coordinates to normalized virtual coordinates (0~1).
+    /// Accounts for viewport offset from letterboxing/pillarboxing.
     /// </summary>
+    /// <param name="screenPosition">The screen position in pixels (e.g., mouse position).</param>
+    /// <returns>Normalized coordinates where (0,0) is top-left and (1,1) is bottom-right of the virtual area.</returns>
     public static Vector2 ScreenToVirtualNormalized(Vector2 screenPosition)
     {
         var viewport = DeviceManager.GraphicsDevice.Viewport;
@@ -137,7 +150,10 @@ public static class Graphics
 
     /// <summary>
     /// Converts screen coordinates to virtual coordinates (0~VirtualWidth, 0~VirtualHeight).
+    /// Accounts for viewport offset from letterboxing/pillarboxing.
     /// </summary>
+    /// <param name="screenPosition">The screen position in pixels (e.g., mouse position).</param>
+    /// <returns>Position in virtual coordinates matching the game's logical resolution.</returns>
     public static Vector2 ScreenToVirtual(Vector2 screenPosition)
     {
         var viewport = DeviceManager.GraphicsDevice.Viewport;

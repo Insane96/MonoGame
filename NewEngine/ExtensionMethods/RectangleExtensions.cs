@@ -2,6 +2,9 @@
 
 namespace NewEngine.ExtensionMethods;
 
+/// <summary>
+/// Extension methods for <see cref="Rectangle"/>.
+/// </summary>
 public static class RectangleExtensions
 {
     /// <summary>
